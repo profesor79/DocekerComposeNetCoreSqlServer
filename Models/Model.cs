@@ -88,31 +88,29 @@ namespace EFGetStarted.AspNetCore.NewDb.Models
             {
                 return;   // DB has been seeded
             }
+
             var blogs = new Blog[]{
-            new Blog{BlogId=1},
-            new Blog{BlogId=2},
-            new Blog{BlogId=3},
+            new Blog{},
+            new Blog{},
+            new Blog{},
             };
 
+            context.Blogs.AddRange(blogs);
+            context.SaveChanges();
 
             if (context.Posts.Any())
             {
                 return;   // DB has been seeded
             }
 
-            var posts = new Post[]{
-                new Post{PostId= 1, Title="Greg meets Docker", Content = "123", BlogId=1},
-                new Post{PostId= 2, Title="Joe meets Docker", Content = "123", BlogId=1},
-                new Post{PostId= 3, Title="Dave meets apple", Content = "123", BlogId=1},
-                new Post{PostId= 4, Title="Who wants banana", Content = "124", BlogId=1},
+            var posts = new Post[]{ 
+                new Post{ Title="Greg meets Docker", Content = "123", BlogId= blogs[0].BlogId},
+                new Post{ Title="Joe meets Docker", Content = "123", BlogId= blogs[1].BlogId},
+                new Post{ Title="Dave meets apple", Content = "123", BlogId= blogs[1].BlogId},
+                new Post{ Title="Who wants banana", Content = "124", BlogId= blogs[2].BlogId},
             };
 
-            context.SaveChanges();
-
-
-
-
-
+            context.Posts.AddRange(posts);
             context.SaveChanges();
         }
     }
