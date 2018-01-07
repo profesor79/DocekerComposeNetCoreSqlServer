@@ -20,23 +20,23 @@ using System.Linq;
 namespace EFGetStarted.AspNetCore.NewDb.Models
 {
 
-     public class BloggingContextFactory : IDesignTimeDbContextFactory<BloggingContext>
+    public class BloggingContextFactory : IDesignTimeDbContextFactory<BloggingContext>
     {
         public BloggingContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<BloggingContext>();
-            
-            SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();            
-            builder.DataSource = "sqlexpress"; 
-            builder.UserID = "sa";            
-            builder.Password = "tota11y5ecret";     
-            builder.InitialCatalog = "excercise";                        
+
+            SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
+            builder.DataSource = "sqlexpress";
+            builder.UserID = "sa";
+            builder.Password = "Tot@11y5ecr3t";
+            builder.InitialCatalog = "excercise";
             optionsBuilder.UseSqlServer(builder.ConnectionString);
 
             return new BloggingContext(optionsBuilder.Options);
         }
     }
-    
+
 
 
 
@@ -46,19 +46,17 @@ namespace EFGetStarted.AspNetCore.NewDb.Models
             : base(options)
         { }
 
-        public BloggingContext(DbContextOptions options) : base(options)
-{
-}
+        //   public BloggingContext(DbContextOptions options) : base(options){}
 
 
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<Post> Posts { get; set; }
 
 
-          protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Blog>().ToTable("Blogs");
-            modelBuilder.Entity<Post>().ToTable("Posts");         
+            modelBuilder.Entity<Post>().ToTable("Posts");
         }
     }
 
@@ -110,7 +108,7 @@ namespace EFGetStarted.AspNetCore.NewDb.Models
             };
 
             context.SaveChanges();
-            
+
 
 
 

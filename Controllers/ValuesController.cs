@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EFGetStarted.AspNetCore.NewDb.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DocekerComposeNetCoreSqlServer.Controllers
@@ -9,11 +10,19 @@ namespace DocekerComposeNetCoreSqlServer.Controllers
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
+        private readonly BloggingContext _context;
+
+        public ValuesController(BloggingContext context)
+        {
+            _context = context;
+        }
+
         // GET api/values
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<Post> Get()
         {
-            return new string[] { "value1", "value2", "value2", "value2", "value2" };
+            var posts = _context.Posts.ToList();
+            return posts;
         }
 
         // GET api/values/5
