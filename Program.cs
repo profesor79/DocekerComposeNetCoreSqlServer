@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using EFGetStarted.AspNetCore.NewDb.Models;
 using Microsoft.AspNetCore;
@@ -23,15 +24,23 @@ namespace DocekerComposeNetCoreSqlServer
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
-                try
+
+                for (var i = 0; i < 5; i++)
                 {
-                    var context = services.GetRequiredService<BloggingContext>();
-                    DbInitializer.Initialize(context);
-                }
-                catch (Exception ex)
-                {
-                    var logger = services.GetRequiredService<ILogger<Program>>();
-                    logger.LogError(ex, "An error occurred while seeding the database.");
+
+                    try
+                    {
+                        var context = services.GetRequiredService<BloggingContext>();
+                        DbInitializer.Initialize(context);
+                    }
+                    catch (Exception ex)
+                    {
+                        var logger = services.GetRequiredService<ILogger<Program>>();
+                        logger.LogError(ex, "An error occurred while seeding the database.");
+                        Thread.Sleep(i * 2000);
+                        logger.LogError("retrying*****");
+                    }
+
                 }
             }
 
