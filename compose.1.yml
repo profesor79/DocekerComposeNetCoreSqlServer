@@ -1,0 +1,18 @@
+version: '2.1'
+services:
+  sqlexpress:
+    image: microsoft/mssql-server-linux
+    environment:
+      SA_PASSWORD : "Tot@11y5ecr3t"
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: Express
+    ports:
+      - "1433:1433"
+  webapp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:  
+      - "sqlexpress"         
+    ports:
+      - "8000:80"    
